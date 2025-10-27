@@ -66,7 +66,7 @@ class TaskList extends HTMLElement {
             }
 
             const ok = window.confirm(
-                `Change status of task '${title}' (#${id}) from '${currentStatus}' to '${newStatus}'?`
+                `Set '${title}' from '${currentStatus}' to '${newStatus}'?`
             );
 
             if (ok) {
