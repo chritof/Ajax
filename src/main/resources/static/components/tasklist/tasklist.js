@@ -1,5 +1,7 @@
 console.log("tasklist online...");
 
+
+
 const template = document.createElement("template");
 template.innerHTML = `
   <link rel="stylesheet" type="text/css" href="${import.meta.url.match(/.*\//)[0]}/tasklist.css"/>
@@ -31,13 +33,22 @@ taskrow.innerHTML = `
 `;
 
 class TaskList extends HTMLElement {
+
+    //spørsmål: er det best å lage private objektvariabler eller bedre å lage
+    //variablene i metoden.
+    //eks: er det best å lage tbody i showTask() eller er det lurere å lage dette
+    //i constructoren?
+    //mer oversiktlig i metode, men raskere kode hvis vi lager i som objektvariabel
+    //siden vi ikke må laste de inn hver gang metoden kjører??
+
+
     #shadow;
     #root;
     #statuses;
     #changeCb;
     #deleteCb;
-    #onChangeDelegated;
-    #onClickDelegated;
+    #onChange;
+    #onRemove;
 
     constructor() {
         super();
@@ -49,7 +60,7 @@ class TaskList extends HTMLElement {
         this.#changeCb = null;
         this.#deleteCb = null;
 
-        this.#onChangeDelegated = (event) => {
+        this.#onChange = (event) => {
             const target = event.target;
             if (!(target instanceof HTMLSelectElement)) return;
 
@@ -77,7 +88,7 @@ class TaskList extends HTMLElement {
             }
         };
 
-        this.#onClickDelegated = (event) => {
+        this.#onRemove = (event) => {
             const btn = event.target;
             if (!(btn instanceof HTMLButtonElement)) return;
 
@@ -92,13 +103,13 @@ class TaskList extends HTMLElement {
     }
 
     connectedCallback() {
-        this.#root.addEventListener("change", this.#onChangeDelegated);
-        this.#root.addEventListener("click", this.#onClickDelegated);
+        this.#root.addEventListener("change", this.#onChange);
+        this.#root.addEventListener("click", this.#onRemove);
     }
 
     disconnectedCallback() {
-        this.#root.removeEventListener("change", this.#onChangeDelegated);
-        this.#root.removeEventListener("click", this.#onClickDelegated);
+        this.#root.removeEventListener("change", this.#onChange);
+        this.#root.removeEventListener("click", this.#onRemove);
     }
 
     setStatuseslist(allstatuses) {

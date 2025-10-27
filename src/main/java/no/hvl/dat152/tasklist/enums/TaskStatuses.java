@@ -1,7 +1,7 @@
 package no.hvl.dat152.tasklist.enums;
 
 public enum TaskStatuses {
-	WAITING("waiting"), ACTIVE("active"), DONE("done"), TEST("test");
+	WAITING("waiting"), ACTIVE("active"), DONE("done");
     
     private final String name;
     

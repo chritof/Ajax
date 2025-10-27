@@ -41,7 +41,6 @@ class TaskBox extends HTMLElement {
         this.#onNewTask = null;
 
         this.#onAddClick = (e) => {
-            e.preventDefault();
             const task = {
                 title: this.#titleInput.value.trim(),
                 status: this.#statusSelect.value
